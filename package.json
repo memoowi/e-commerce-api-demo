@@ -1,17 +1,25 @@
 {
-  "name": "e-commerce-api-demo",
+  "name": "e-comm-api",
   "version": "1.0.0",
-  "description": "teaching module for 10th grade RPL students by memoowi",
-  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/memoowi/e-commerce-api-demo.git"
+  },
+  "keywords": [],
+  "author": "memoowi",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/memoowi/e-commerce-api-demo/issues"
+  },
+  "homepage": "https://github.com/memoowi/e-commerce-api-demo#readme",
+  "description": "",
   "dependencies": {
     "@supabase/supabase-js": "^2.47.16",
-    "body-parser": "^1.20.3",
-    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2"
   }
