@@ -3,17 +3,23 @@ import {
   registerUser,
   loginUser,
   userData,
+  logoutUser,
 } from "../controllers/authController.js";
 import { requireAuth } from "../middlewares/authMiddleware.js";
+import {
+  addCategory,
+  getCategories,
+} from "../controllers/categoriesController.js";
+import { uploadMiddleware } from "../middlewares/uploadMiddleware.js";
 
 const router = express.Router();
 
-// Route: Register user
 router.post("/register", registerUser);
-
-// Route: Login user
 router.post("/login", loginUser);
-
 router.get("/user", requireAuth, userData);
+router.post("/logout", requireAuth, logoutUser);
+
+router.get("/categories", getCategories);
+router.post("/categories", requireAuth, uploadMiddleware, addCategory);
 
 export default router;

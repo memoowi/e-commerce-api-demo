@@ -1,4 +1,4 @@
-import { getUserData } from "../services/supabaseService.js";
+import { supabase } from "../services/supabaseService.js";
 import { handleError } from "../utils/responseUtils.js";
 
 export const requireAuth = async (req, res, next) => {
@@ -13,17 +13,17 @@ export const requireAuth = async (req, res, next) => {
   }
 
   try {
-    const { user: data, error: error } = await getUserData(token);
+    const { data: authData, error: error } = await supabase.auth.getUser(token);
 
     if (error) {
-      return handleError(res, error.status , error.message);
+      return handleError(res, error.status, error.message);
     }
 
-    req.user = data;
+    req.user = authData;
     // console.log("User data:", data);
     next();
   } catch (error) {
     console.error("Error fetching user data:", error);
-    return handleError(res, 500, "Error fetching user data");
+    return handleError(res, 500, error.message);
   }
 };
