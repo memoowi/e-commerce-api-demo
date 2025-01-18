@@ -1,21 +1,22 @@
 import { getUserData } from "../services/supabaseService.js";
+import { handleError } from "../utils/responseUtils.js";
 
 export const requireAuth = async (req, res, next) => {
   if (!req.headers.authorization) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return handleError(res, 401, "Unauthorized, missing token");
   }
 
   const token = req.headers.authorization.split("Bearer ")[1];
 
   if (!token) {
-    return res.status(401).json({ error: "Unauthorized, missing token" });
+    return handleError(res, 401, "Unauthorized, missing token");
   }
 
   try {
     const { user: data, error: error } = await getUserData(token);
 
     if (error) {
-      return res.status(401).json({ error: "Unauthorized, invalid token" });
+      return handleError(res, error.status , error.message);
     }
 
     req.user = data;
@@ -23,6 +24,6 @@ export const requireAuth = async (req, res, next) => {
     next();
   } catch (error) {
     console.error("Error fetching user data:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    return handleError(res, 500, "Error fetching user data");
   }
 };
