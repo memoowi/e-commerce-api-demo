@@ -44,3 +44,13 @@ export const signIn = async (email, password) => {
 
   return data;
 };
+
+// Get user data
+export const getUserData = async (token) => {
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser(token);
+
+  return { user, error };
+};
